@@ -21,6 +21,9 @@
 #import "OnePasswordExtension.h"
 #import "TUSafariActivity.h"
 
+#import <NetworkExtension/NetworkExtension.h>
+#import "Config.h"
+
 @implementation WebViewMenuController {
 	AppDelegate *appDelegate;
 	IASKAppSettingsViewController *appSettingsViewController;
@@ -37,6 +40,8 @@ NSString * const LABEL = @"L";
 	appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
 
 	buttons = [[NSMutableArray alloc] initWithCapacity:10];
+
+	[buttons addObject:@{ FUNC: @"menuSinkhole", LABEL: NSLocalizedString(@"Sinkhole", nil) }];
 	
 	[buttons addObject:@{ FUNC : @"menuRefresh", LABEL : NSLocalizedString(@"Refresh", nil) }];
 	
@@ -187,6 +192,73 @@ NSString * const LABEL = @"L";
 
 
 /* individual menu item functions */
+
+- (void)menuSinkhole
+{
+	NSLog(@"[%@]#menuSinkhole", [self class]);
+
+	[NETunnelProviderManager loadAllFromPreferencesWithCompletionHandler:^(NSArray<NETunnelProviderManager *> * _Nullable managers, NSError * _Nullable error) {
+		if (managers.count < 1)
+		{
+			NETunnelProviderProtocol *config = [[NETunnelProviderProtocol alloc] init];
+			config.providerConfiguration = @{@"lol": @1};
+			config.providerBundleIdentifier = Config.extBundleId;
+			config.serverAddress = @"sinkhole";
+
+			NETunnelProviderManager *manager = [[NETunnelProviderManager alloc] init];
+			manager.protocolConfiguration = config;
+			manager.localizedDescription = NSLocalizedString(@"Sinkhole", nil);
+
+			[manager saveToPreferencesWithCompletionHandler:^(NSError * _Nullable error) {
+				if (error) {
+					NSLog(@"[%@]#menuSinkhole error=%@", [self class], error);
+					return;
+				}
+
+				[self startTunnel:manager];
+			}];
+		}
+		else {
+			[self startTunnel:managers.firstObject];
+		}
+	}];
+}
+
+- (void)startTunnel:(NETunnelProviderManager *)manager
+{
+	NSLog(@"[%@]#startTunnel", [self class]);
+
+	NETunnelProviderSession *session = (NETunnelProviderSession *) manager.connection;
+
+	NSError *error;
+	[session startVPNTunnelAndReturnError:&error];
+
+	NSLog(@"[%@]#startTunnel error=%@", [self class], error);
+
+	[self commTunnel:session];
+}
+
+- (void)commTunnel:(NETunnelProviderSession *)session
+{
+	NSError *error;
+
+	[session sendProviderMessage:[[NSData alloc] init] returnError:&error responseHandler:^(NSData * _Nullable responseData) {
+		NSDictionary *response = [NSKeyedUnarchiver unarchiveObjectWithData:responseData];
+		NSArray *log = response[@"log"];
+
+		for (NSString *line in log) {
+			NSLog(@"[EXT] %@", [line stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet]);
+		}
+	}];
+
+	if (error) {
+		NSLog(@"[%@]#commTunnel error=%@", [self class], error);
+	}
+
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC / 10), dispatch_get_main_queue(), ^{
+		[self commTunnel:session];
+	});
+}
 
 
 - (void)menuRefresh

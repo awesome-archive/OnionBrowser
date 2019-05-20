@@ -91,6 +91,10 @@
 		8AF16095202CD6D600AC0BCE /* block_webrtc.js in Resources */ = {isa = PBXBuildFile; fileRef = 8AF16094202CD6D600AC0BCE /* block_webrtc.js */; };
 		A02CE2B8220079B800964A14 /* SearchResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = A02CE2B6220079B700964A14 /* SearchResultsController.m */; };
 		A02CE2BB22007A0200964A14 /* HistoryController.m in Sources */ = {isa = PBXBuildFile; fileRef = A02CE2BA22007A0200964A14 /* HistoryController.m */; };
+		A03DBCD7228589EC001890C4 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A03DBCD6228589EC001890C4 /* NetworkExtension.framework */; };
+		A03DBCE022858BBA001890C4 /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03DBCDF22858BBA001890C4 /* PacketTunnelProvider.swift */; };
+		A03DBCE522858BBA001890C4 /* Sinkhole.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = A03DBCDD22858BBA001890C4 /* Sinkhole.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		A03DBCEA22858BE2001890C4 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A03DBCD6228589EC001890C4 /* NetworkExtension.framework */; };
 		A03DBCED22859B99001890C4 /* Config.m in Sources */ = {isa = PBXBuildFile; fileRef = A03DBCEC22859B99001890C4 /* Config.m */; };
 		A03DBCEE22859B99001890C4 /* Config.m in Sources */ = {isa = PBXBuildFile; fileRef = A03DBCEC22859B99001890C4 /* Config.m */; };
 		A03DBCEF22859B99001890C4 /* Config.m in Sources */ = {isa = PBXBuildFile; fileRef = A03DBCEC22859B99001890C4 /* Config.m */; };
@@ -125,6 +129,13 @@
 			remoteGlobalIDString = 8AC3B3A721700AD300E0CB4A;
 			remoteInfo = OBVersion;
 		};
+		A03DBCE322858BBA001890C4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01801E8A1A32CA2A002B4718 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A03DBCDC22858BBA001890C4;
+			remoteInfo = Sinkhole;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -135,6 +146,17 @@
 			dstSubfolderSpec = 7;
 			files = (
 			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A03DBCE922858BBA001890C4 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				A03DBCE522858BBA001890C4 /* Sinkhole.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -394,6 +416,12 @@
 		A03DBCB222857D1B001890C4 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		A03DBCB322857D68001890C4 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		A03DBCBF22857DF5001890C4 /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A03DBCD6228589EC001890C4 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
+		A03DBCD8228589EC001890C4 /* OnionBrowser.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OnionBrowser.entitlements; sourceTree = "<group>"; };
+		A03DBCDD22858BBA001890C4 /* Sinkhole.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Sinkhole.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		A03DBCDF22858BBA001890C4 /* PacketTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketTunnelProvider.swift; sourceTree = "<group>"; };
+		A03DBCE122858BBA001890C4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A03DBCE222858BBA001890C4 /* Sinkhole.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Sinkhole.entitlements; sourceTree = "<group>"; };
 		A03DBCEB22859B99001890C4 /* Config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
 		A03DBCEC22859B99001890C4 /* Config.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Config.m; sourceTree = "<group>"; };
 		A045E5E21EDC5C1700BC8A92 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Endless/Base.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -515,6 +543,7 @@
 				019516D11B7D8B400078586A /* libz.tbd in Frameworks */,
 				016B2FCD1A5648AE002D2730 /* WebKit.framework in Frameworks */,
 				C5C31F75A60EA0CFBD188E31 /* Pods_OnionBrowser2.framework in Frameworks */,
+				A03DBCD7228589EC001890C4 /* NetworkExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -526,12 +555,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A03DBCDA22858BBA001890C4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A03DBCEA22858BE2001890C4 /* NetworkExtension.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		01801E891A32CA2A002B4718 = {
 			isa = PBXGroup;
 			children = (
+				A03DBCD8228589EC001890C4 /* OnionBrowser.entitlements */,
 				A010FA171E7986DE00E04222 /* README.md */,
 				A025F27421F62C100034B947 /* Config.xcconfig */,
 				A03DBCEB22859B99001890C4 /* Config.h */,
@@ -544,6 +582,7 @@
 				01AFEB4A1B4F2A5F00A02482 /* External */,
 				01801E951A32CA2A002B4718 /* Supporting Files */,
 				018333D81A35727C00670CD1 /* Endless Tests */,
+				A03DBCDE22858BBA001890C4 /* Sinkhole */,
 				01801E931A32CA2A002B4718 /* Products */,
 				6CC21620E2AE7B4037C6401B /* Frameworks */,
 				B1EB2F32A9D9D14276D9A162 /* Pods */,
@@ -556,6 +595,7 @@
 			children = (
 				01801E921A32CA2A002B4718 /* OnionBrowser.app */,
 				018333D71A35727C00670CD1 /* OnionBrowser2 Tests.xctest */,
+				A03DBCDD22858BBA001890C4 /* Sinkhole.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -732,6 +772,7 @@
 		6CC21620E2AE7B4037C6401B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A03DBCD6228589EC001890C4 /* NetworkExtension.framework */,
 				A0C3770D1F47342C0039198E /* CoreData.framework */,
 				693145FD1D3EEAE400D08A6A /* Tor.framework */,
 				019516D01B7D8B400078586A /* libz.tbd */,
@@ -998,6 +1039,16 @@
 			path = es;
 			sourceTree = "<group>";
 		};
+		A03DBCDE22858BBA001890C4 /* Sinkhole */ = {
+			isa = PBXGroup;
+			children = (
+				A03DBCDF22858BBA001890C4 /* PacketTunnelProvider.swift */,
+				A03DBCE122858BBA001890C4 /* Info.plist */,
+				A03DBCE222858BBA001890C4 /* Sinkhole.entitlements */,
+			);
+			path = Sinkhole;
+			sourceTree = "<group>";
+		};
 		A06441F9200CB82500D6C50C /* AppStore */ = {
 			isa = PBXGroup;
 			children = (
@@ -1057,11 +1108,13 @@
 				01801E901A32CA2A002B4718 /* Resources */,
 				693145FF1D3EEAF500D08A6A /* ShellScript */,
 				89C901B3C39940B10E4CE4EE /* [CP] Embed Pods Frameworks */,
+				A03DBCE922858BBA001890C4 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				8A3EBA9421700B0A0054A9FF /* PBXTargetDependency */,
+				A03DBCE422858BBA001890C4 /* PBXTargetDependency */,
 			);
 			name = OnionBrowser2;
 			productName = Endless;
@@ -1089,6 +1142,23 @@
 			productReference = 018333D71A35727C00670CD1 /* OnionBrowser2 Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		A03DBCDC22858BBA001890C4 /* Sinkhole */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A03DBCE622858BBA001890C4 /* Build configuration list for PBXNativeTarget "Sinkhole" */;
+			buildPhases = (
+				A03DBCD922858BBA001890C4 /* Sources */,
+				A03DBCDA22858BBA001890C4 /* Frameworks */,
+				A03DBCDB22858BBA001890C4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Sinkhole;
+			productName = Sinkhole;
+			productReference = A03DBCDD22858BBA001890C4 /* Sinkhole.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1105,7 +1175,13 @@
 						LastSwiftMigration = 1020;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
 							com.apple.DataProtection = {
+								enabled = 1;
+							};
+							com.apple.NetworkExtensions.iOS = {
 								enabled = 1;
 							};
 						};
@@ -1120,6 +1196,20 @@
 						CreatedOnToolsVersion = 10.0;
 						DevelopmentTeam = "$(DEVELOPMENT_TEAM)";
 						ProvisioningStyle = Automatic;
+					};
+					A03DBCDC22858BBA001890C4 = {
+						CreatedOnToolsVersion = 10.2.1;
+						DevelopmentTeam = "$(DEVELOPMENT_TEAM)";
+						LastSwiftMigration = 1020;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.DataProtection = {
+								enabled = 1;
+							};
+							com.apple.NetworkExtensions.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -1219,6 +1309,13 @@
 				01F2AE451B827D3E00D5651A /* lobste.rs.crt in Resources */,
 				01F879441A41140D00A63654 /* https-everywhere_mock_rules.plist in Resources */,
 				01F2AE4A1B82835A00D5651A /* expired.superblock.net.crt in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A03DBCDB22858BBA001890C4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1432,6 +1529,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A03DBCD922858BBA001890C4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A03DBCE022858BBA001890C4 /* PacketTunnelProvider.swift in Sources */,
+				A03DBCEE22859B99001890C4 /* Config.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1444,6 +1550,11 @@
 			isa = PBXTargetDependency;
 			target = 8AC3B3A721700AD300E0CB4A /* OBVersion */;
 			targetProxy = 8A3EBA9321700B0A0054A9FF /* PBXContainerItemProxy */;
+		};
+		A03DBCE422858BBA001890C4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A03DBCDC22858BBA001890C4 /* Sinkhole */;
+			targetProxy = A03DBCE322858BBA001890C4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1727,6 +1838,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = OnionBrowser.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
@@ -1759,6 +1871,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = OnionBrowser.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
@@ -1865,6 +1978,70 @@
 			};
 			name = Release;
 		};
+		A03DBCE722858BBA001890C4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = Sinkhole/Sinkhole.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "$(DEVELOPMENT_TEAM)";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = Sinkhole/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(OB_EXT_BUNDLE_ID)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "$(PROVISIONING_PROFILE_SPECIFIER_EXT)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A03DBCE822858BBA001890C4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = Sinkhole/Sinkhole.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "$(DEVELOPMENT_TEAM)";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = Sinkhole/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(OB_EXT_BUNDLE_ID)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "$(PROVISIONING_PROFILE_SPECIFIER_EXT)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1900,6 +2077,15 @@
 			buildConfigurations = (
 				8AC3B3A921700AD300E0CB4A /* Debug */,
 				8AC3B3AA21700AD300E0CB4A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A03DBCE622858BBA001890C4 /* Build configuration list for PBXNativeTarget "Sinkhole" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A03DBCE722858BBA001890C4 /* Debug */,
+				A03DBCE822858BBA001890C4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
