@@ -78,7 +78,9 @@ import Foundation
             "--clientuseipv6", "1",
             "--ClientTransportPlugin", "obfs4 socks5 127.0.0.1:47351",
             "--ClientTransportPlugin", "meek_lite socks5 127.0.0.1:47352",
-            "--ClientOnionAuthDir", authDir.path
+            "--ClientOnionAuthDir", authDir.path,
+            "--GeoIPFile", Bundle.main.path(forResource: "geoip", ofType: nil) ?? "",
+            "--GeoIPv6File", Bundle.main.path(forResource: "geoip6", ofType: nil) ?? "",
         ]
 
         configuration.arguments = config_args
@@ -87,39 +89,8 @@ import Foundation
 
     // MARK: - Built-in configuration options
 
-    private static let obfs4Bridges = [
-        "obfs4 154.35.22.10:15937 8FB9F4319E89E5C6223052AA525A192AFBC85D55 cert=GGGS1TX4R81m3r0HBl79wKy1OtPPNR2CZUIrHjkRg65Vc2VR8fOyo64f9kmT1UAFG7j0HQ iat-mode=0",
-        "obfs4 192.99.11.54:443 7B126FAB960E5AC6A629C729434FF84FB5074EC2 cert=VW5f8+IBUWpPFxF+rsiVy2wXkyTQG7vEd+rHeN2jV5LIDNu8wMNEOqZXPwHdwMVEBdqXEw iat-mode=0",
-        "obfs4 109.105.109.165:10527 8DFCD8FB3285E855F5A55EDDA35696C743ABFC4E cert=Bvg/itxeL4TWKLP6N1MaQzSOC6tcRIBv6q57DYAZc3b2AzuM+/TfB7mqTFEfXILCjEwzVA iat-mode=1",
-        "obfs4 83.212.101.3:50002 A09D536DD1752D542E1FBB3C9CE4449D51298239 cert=lPRQ/MXdD1t5SRZ9MquYQNT9m5DV757jtdXdlePmRCudUU9CFUOX1Tm7/meFSyPOsud7Cw iat-mode=0",
-        "obfs4 109.105.109.147:13764 BBB28DF0F201E706BE564EFE690FE9577DD8386D cert=KfMQN/tNMFdda61hMgpiMI7pbwU1T+wxjTulYnfw+4sgvG0zSH7N7fwT10BI8MUdAD7iJA iat-mode=2",
-        "obfs4 154.35.22.11:16488 A832D176ECD5C7C6B58825AE22FC4C90FA249637 cert=YPbQqXPiqTUBfjGFLpm9JYEFTBvnzEJDKJxXG5Sxzrr/v2qrhGU4Jls9lHjLAhqpXaEfZw iat-mode=0",
-        "obfs4 154.35.22.12:80 00DC6C4FA49A65BD1472993CF6730D54F11E0DBB cert=N86E9hKXXXVz6G7w2z8wFfhIDztDAzZ/3poxVePHEYjbKDWzjkRDccFMAnhK75fc65pYSg iat-mode=0",
-        "obfs4 154.35.22.13:443 FE7840FE1E21FE0A0639ED176EDA00A3ECA1E34D cert=fKnzxr+m+jWXXQGCaXe4f2gGoPXMzbL+bTBbXMYXuK0tMotd+nXyS33y2mONZWU29l81CA iat-mode=0",
-        "obfs4 154.35.22.10:80 8FB9F4319E89E5C6223052AA525A192AFBC85D55 cert=GGGS1TX4R81m3r0HBl79wKy1OtPPNR2CZUIrHjkRg65Vc2VR8fOyo64f9kmT1UAFG7j0HQ iat-mode=0",
-        "obfs4 154.35.22.10:443 8FB9F4319E89E5C6223052AA525A192AFBC85D55 cert=GGGS1TX4R81m3r0HBl79wKy1OtPPNR2CZUIrHjkRg65Vc2VR8fOyo64f9kmT1UAFG7j0HQ iat-mode=0",
-        "obfs4 154.35.22.11:443 A832D176ECD5C7C6B58825AE22FC4C90FA249637 cert=YPbQqXPiqTUBfjGFLpm9JYEFTBvnzEJDKJxXG5Sxzrr/v2qrhGU4Jls9lHjLAhqpXaEfZw iat-mode=0",
-        "obfs4 154.35.22.11:80 A832D176ECD5C7C6B58825AE22FC4C90FA249637 cert=YPbQqXPiqTUBfjGFLpm9JYEFTBvnzEJDKJxXG5Sxzrr/v2qrhGU4Jls9lHjLAhqpXaEfZw iat-mode=0",
-        "obfs4 154.35.22.9:12166 C73ADBAC8ADFDBF0FC0F3F4E8091C0107D093716 cert=gEGKc5WN/bSjFa6UkG9hOcft1tuK+cV8hbZ0H6cqXiMPLqSbCh2Q3PHe5OOr6oMVORhoJA iat-mode=0",
-        "obfs4 154.35.22.9:80 C73ADBAC8ADFDBF0FC0F3F4E8091C0107D093716 cert=gEGKc5WN/bSjFa6UkG9hOcft1tuK+cV8hbZ0H6cqXiMPLqSbCh2Q3PHe5OOr6oMVORhoJA iat-mode=0",
-        "obfs4 154.35.22.9:443 C73ADBAC8ADFDBF0FC0F3F4E8091C0107D093716 cert=gEGKc5WN/bSjFa6UkG9hOcft1tuK+cV8hbZ0H6cqXiMPLqSbCh2Q3PHe5OOr6oMVORhoJA iat-mode=0",
-        "obfs4 154.35.22.12:4304 00DC6C4FA49A65BD1472993CF6730D54F11E0DBB cert=N86E9hKXXXVz6G7w2z8wFfhIDztDAzZ/3poxVePHEYjbKDWzjkRDccFMAnhK75fc65pYSg iat-mode=0",
-        "obfs4 154.35.22.13:16815 FE7840FE1E21FE0A0639ED176EDA00A3ECA1E34D cert=fKnzxr+m+jWXXQGCaXe4f2gGoPXMzbL+bTBbXMYXuK0tMotd+nXyS33y2mONZWU29l81CA iat-mode=0",
-        "obfs4 192.95.36.142:443 CDF2E852BF539B82BD10E27E9115A31734E378C2 cert=qUVQ0srL1JI/vO6V6m/24anYXiJD3QP2HgzUKQtQ7GRqqUvs7P+tG43RtAqdhLOALP7DJQ iat-mode=1",
-        "obfs4 85.17.30.79:443 FC259A04A328A07FED1413E9FC6526530D9FD87A cert=RutxZlu8BtyP+y0NX7bAVD41+J/qXNhHUrKjFkRSdiBAhIHIQLhKQ2HxESAKZprn/lR3KA iat-mode=0",
-        "obfs4 38.229.1.78:80 C8CBDB2464FC9804A69531437BCF2BE31FDD2EE4 cert=Hmyfd2ev46gGY7NoVxA9ngrPF2zCZtzskRTzoWXbxNkzeVnGFPWmrTtILRyqCTjHR+s9dg iat-mode=1",
-        "obfs4 [2001:470:b381:bfff:216:3eff:fe23:d6c3]:443 CDF2E852BF539B82BD10E27E9115A31734E378C2 cert=qUVQ0srL1JI/vO6V6m/24anYXiJD3QP2HgzUKQtQ7GRqqUvs7P+tG43RtAqdhLOALP7DJQ iat-mode=1",
-        "obfs4 37.218.240.34:40035 88CD36D45A35271963EF82E511C8827A24730913 cert=eGXYfWODcgqIdPJ+rRupg4GGvVGfh25FWaIXZkit206OSngsp7GAIiGIXOJJROMxEqFKJg iat-mode=1",
-        "obfs4 37.218.245.14:38224 D9A82D2F9C2F65A18407B1D2B764F130847F8B5D cert=bjRaMrr1BRiAW8IE9U5z27fQaYgOhX1UCmOpg2pFpoMvo6ZgQMzLsaTzzQNTlm7hNcb+Sg iat-mode=0",
-        "obfs4 85.31.186.98:443 011F2599C0E9B27EE74B353155E244813763C3E5 cert=ayq0XzCwhpdysn5o0EyDUbmSOx3X/oTEbzDMvczHOdBJKlvIdHHLJGkZARtT4dcBFArPPg iat-mode=0",
-        "obfs4 85.31.186.26:443 91A6354697E6B02A386312F68D82CF86824D3606 cert=PBwr+S8JTVZo6MPdHnkTwXJPILWADLqfMGoVvhZClMq/Urndyd42BwX9YFJHZnBB3H0XCw iat-mode=0"
-    ]
-    private static let obfs4BridgesIPv6 = [
-        "obfs4 [2001:470:b381:bfff:216:3eff:fe23:d6c3]:443 CDF2E852BF539B82BD10E27E9115A31734E378C2 cert=qUVQ0srL1JI/vO6V6m/24anYXiJD3QP2HgzUKQtQ7GRqqUvs7P+tG43RtAqdhLOALP7DJQ iat-mode=1"
-    ]
-    public static let meekAmazonBridges = [
-        "meek_lite 0.0.2.0:2 B9E7141C594AF25699E0079C1F0146F409495296 url=https://d2cly7j4zqgua7.cloudfront.net/ front=a0.awsstatic.com"
-    ]
+    private static let obfs4Bridges = NSArray(contentsOfFile: Bundle.main.path(forResource: "obfs4-bridges", ofType: "plist")!) as! [String]
+
     public static let meekAzureBridges = [
         "meek_lite 0.0.2.0:3 97700DFE9F483596DDA6264C4D7DF7641E1E39CE url=https://meek.azureedge.net/ front=ajax.aspnetcdn.com"
     ]
@@ -172,9 +143,15 @@ import Foundation
             // we think we're on a ipv6-only DNS64/NAT64 network
             confs.append(["key":"ClientPreferIPv6ORPort", "value":"1"])
             if (self.bridgesId != nil && self.bridgesId != USE_BRIDGES_NONE) {
-                // bridges on, leave ipv4 on
+                // bridges on, leave ipv4 on.
+                // user's bridge config contains all the IPs (v4 or v6)
+                // that we connect to, so we let _that_ setting override our
+                // "ipv6 only" self-test.
                 confs.append(["key":"clientuseipv4", "value":"1"])
             } else {
+                // otherwise, for ipv6-only no-bridge state, disable ipv4
+                // connections from here to entry/guard
+                // nodes. (i.e. all outbound connections are ipv6 only.)
                 confs.append(["key":"clientuseipv4", "value":"0"])
             }
         } else {
@@ -185,24 +162,27 @@ import Foundation
         }
         
         torController?.setConfs(confs, completion: { (_, _) in
+			self.torReconnect()
         })
-        torReconnect()
     }
 
-    @objc func torReconnect() {
-        //torController.setConfForKey("DisableNetwork", withValue: "1", completion: { (_, _) in
-        //})
-
-        torController?.sendCommand("RELOAD", arguments: nil, data: nil, observer: { (_, _, _) -> Bool in
-            return true
-        })
-        torController?.sendCommand("SIGNAL NEWNYM", arguments: nil, data: nil, observer: { (_, _, _) -> Bool in
-            return true
-        })
-
-        //torController.setConfForKey("DisableNetwork", withValue: "0", completion: { (_, _) in
-        //})
+	@objc func torReconnect(_ callback: ((_ success: Bool) -> Void)? = nil) {
+		torController?.resetConnection(callback)
     }
+
+	func closeCircuits(_ circuits: [TorCircuit], _ callback: @escaping ((_ success: Bool) -> Void)) {
+		torController?.close(circuits, completion: callback)
+	}
+
+	/**
+	Get all fully built circuits and detailed info about their nodes.
+
+	- parameter callback: Called, when all info is available.
+	- parameter circuits: A list of circuits and the nodes they consist of.
+	*/
+	func getCircuits(_ callback: @escaping ((_ circuits: [TorCircuit]) -> Void)) {
+		torController?.getCircuits(callback)
+	}
 
     @objc func startTor(delegate: OnionManagerDelegate?) {
         cancelInitRetry()
@@ -234,13 +214,7 @@ import Foundation
                 args.append("1")
                 switch bridgesId! {
                 case USE_BRIDGES_OBFS4:
-                    if (Ipv6Tester.ipv6_status() == OnionManager.TOR_IPV6_CONN_ONLY) {
-                        args += bridgeLinesToArgs(OnionManager.obfs4BridgesIPv6)
-                    } else {
-                        args += bridgeLinesToArgs(OnionManager.obfs4Bridges)
-                    }
-                case USE_BRIDGES_MEEKAMAZON:
-                    args += bridgeLinesToArgs(OnionManager.meekAmazonBridges)
+                    args += bridgeLinesToArgs(OnionManager.obfs4Bridges)
                 case USE_BRIDGES_MEEKAZURE:
                     args += bridgeLinesToArgs(OnionManager.meekAzureBridges)
                 default:
@@ -257,19 +231,22 @@ import Foundation
             print("[\(String(describing: OnionManager.self))] ipv6_status: \(Ipv6Tester.ipv6_status())")
             if (Ipv6Tester.ipv6_status() == OnionManager.TOR_IPV6_CONN_ONLY) {
                 args += [
-                    "--ClientPreferIPv6DirPort", "1",
                     "--ClientPreferIPv6ORPort", "1",
                 ]
                 if bridgesId != nil && bridgesId != USE_BRIDGES_NONE {
-                    // ipv6-only + bridges, leave ipv4 on
+                    // bridges on, leave ipv4 on.
+                    // user's bridge config contains all the IPs (v4 or v6)
+                    // that we connect to, so we let _that_ setting override our
+                    // "ipv6 only" self-test.
                     args += ["--clientuseipv4", "1"]
                 } else {
-                    // ipv6-only, bridges are off
+                    // otherwise, for ipv6-only no-bridge state, disable ipv4
+                    // connections from here to entry/guard
+                    // nodes. (i.e. all outbound connections are ipv6 only.)
                     args += ["--clientuseipv4", "0"]
                 }
             } else {
                 args += [
-                    "--ClientPreferIPv6DirPort", "auto",
                     "--ClientPreferIPv6ORPort", "auto",
                     "--clientuseipv4", "1",
                 ]
@@ -304,13 +281,7 @@ import Foundation
 
                     switch bridgesId! {
                     case USE_BRIDGES_OBFS4:
-                        if (Ipv6Tester.ipv6_status() == OnionManager.TOR_IPV6_CONN_ONLY) {
-                            bridges = OnionManager.obfs4BridgesIPv6
-                        } else {
-                            bridges = OnionManager.obfs4Bridges
-                        }
-                    case USE_BRIDGES_MEEKAMAZON:
-                        bridges = OnionManager.meekAmazonBridges
+                        bridges = OnionManager.obfs4Bridges
                     case USE_BRIDGES_MEEKAZURE:
                         bridges = OnionManager.meekAzureBridges
                     default:

@@ -8,7 +8,6 @@
 #import "OBRootViewController.h"
 #import "AppDelegate.h"
 #import "OBSettingsConstants.h"
-#import "Ipv6Tester.h"
 
 #ifdef __OBJC__
 #import "OnionBrowser-Swift.h"
@@ -19,20 +18,16 @@
 
 - (id)init
 {
-    if (self = [super initWithNibName: @"LaunchScreen" bundle: [NSBundle bundleForClass: [OBRootViewController classForCoder]]])
+	if (self = [super init])
     {
+		self.view.backgroundColor = UIColor.poeAccent;
+
         self.introVC = [[IntroViewController alloc] init];
         self.introVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
 
         NSDictionary<NSNumber *,NSString *> *builtInBridges;
-        if ([Ipv6Tester ipv6_status] == TOR_IPV6_CONN_ONLY) {
-            builtInBridges = @{[NSNumber numberWithInteger:USE_BRIDGES_OBFS4]: @"obfs4",
-                               [NSNumber numberWithInteger:USE_BRIDGES_MEEKAMAZON]: @"meek-amazon",
-                               [NSNumber numberWithInteger:USE_BRIDGES_MEEKAZURE]: @"meek-azure"};
-        } else {
-            builtInBridges = @{[NSNumber numberWithInteger:USE_BRIDGES_OBFS4]: @"obfs4",
-                               [NSNumber numberWithInteger:USE_BRIDGES_MEEKAZURE]: @"meek-azure"};
-        }
+		builtInBridges = @{[NSNumber numberWithInteger:USE_BRIDGES_OBFS4]: @"obfs4",
+						   [NSNumber numberWithInteger:USE_BRIDGES_MEEKAZURE]: @"meek-azure"};
 
         self.bridgeVC = [BridgeSelectViewController
                          instantiateWithCurrentId:[NSUserDefaults.standardUserDefaults integerForKey:USE_BRIDGES]
@@ -104,6 +99,13 @@
     {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.conctVC connectingFinished];
+
+			if (![NSUserDefaults.standardUserDefaults boolForKey:@"did_first_run_bookmarks"])
+			{
+				[Bookmark firstRunSetup];
+
+				[NSUserDefaults.standardUserDefaults setBool:YES forKey:@"did_first_run_bookmarks"];
+			}
         });
     }
 }
@@ -187,14 +189,14 @@
 - (void)userFinishedConnecting
 {
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    appDelegate.webViewController = [[WebViewController alloc] init];
+    appDelegate.browsingUi = [[BrowsingViewController alloc] init];
 
     [self dismissViewControllerAnimated: YES completion: ^{
-        appDelegate.window.rootViewController = appDelegate.webViewController;
+        appDelegate.window.rootViewController = appDelegate.browsingUi;
 
 		[TabSecurity restore];
 
-		[appDelegate.webViewController viewIsVisible];
+		[appDelegate.browsingUi becomesVisible];
     }];
 }
 
