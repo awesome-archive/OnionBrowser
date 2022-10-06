@@ -1,1 +1,1 @@
-
+- Frissítve a Tor.framework 407.8.2-re, amely tartalmazza a Tor 0.4.7.8-at.

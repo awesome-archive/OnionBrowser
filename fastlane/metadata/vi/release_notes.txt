@@ -1,0 +1,1 @@
+- Cập nhật lên Tor.framework 407.8.2 chứa Tor 0.4.7.8.

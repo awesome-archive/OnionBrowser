@@ -5,9 +5,7 @@
  * See LICENSE file for redistribution terms.
  */
 
-#import "AppDelegate.h"
 #import "CookieJar.h"
-#import "HostSettings.h"
 #import "HTTPSEverywhere.h"
 #import "OnionBrowser-Swift.h"
 
@@ -36,7 +34,7 @@
 #define LOCAL_STORAGE_REGEX_HOSTNAME_GROUP 3
 
 /* files we'll exclude from a deep-clean of the cache directory */
-#define CACHE_EXCLUSIONS_REGEX @"^(%@(/(HSTS\\.plist|com\\.apple\\.(metal|opengl)(/.*)?|(Databases|Cache)\\.db(-shm|-wal)?))?|Snapshots(/.*)?|tor(/.*)?)$"
+#define CACHE_EXCLUSIONS_REGEX @"^(%@(/(HSTS\\.plist|com\\.apple\\.(metal|opengl)(/.*)?|(Databases|Cache)\\.db(-shm|-wal)?))?|Snapshots(/.*)?|tor(/.*)?|start.html)$"
 
 @implementation CookieJar {
 	AppDelegate *appDelegate;
@@ -80,15 +78,12 @@
 			
 			NSLog(@"[CookieJar] migrating old cookie whitelist to HostSettings: %@", list);
 			for (NSString *host in [list allKeys]) {
-				HostSettings *hc = [HostSettings forHost:host];
-				if (hc == nil)
-					hc = [[HostSettings alloc] initForHost:host withDict:nil];
-				
-				[hc setSetting:HOST_SETTINGS_KEY_WHITELIST_COOKIES toValue:HOST_SETTINGS_VALUE_YES];
+				HostSettings *hc = [HostSettings for:host];
+				hc.whitelistCookies = YES;
 				[hc save];
 			}
 			
-			[HostSettings persist];
+			[HostSettings store];
 			[fileManager removeItemAtPath:whitelist error:nil];
 		}
 	}
@@ -100,32 +95,7 @@
 
 - (BOOL)isHostWhitelisted:(NSString *)host
 {
-	host = [host lowercaseString];
-
-	HostSettings *hs = [HostSettings forHost:host];
-	if (hs && [hs boolSettingOrDefault:HOST_SETTINGS_KEY_WHITELIST_COOKIES]) {
-#ifdef TRACE_COOKIE_WHITELIST
-		NSLog(@"[CookieJar] found entry for %@", host);
-#endif
-		return YES;
-	}
-	
-	/* for a cookie host of x.y.z.example.com, try y.z.example.com, z.example.com, example.com, etc. */
-	NSArray *hostp = [host componentsSeparatedByString:@"."];
-	for (int i = 1; i < [hostp count]; i++) {
-		NSString *wc = [[hostp subarrayWithRange:NSMakeRange(i, [hostp count] - i)] componentsJoinedByString:@"."];
-
-		if ((hs = [HostSettings forHost:wc]) && [hs boolSettingOrDefault:HOST_SETTINGS_KEY_WHITELIST_COOKIES]) {
-#ifdef TRACE_COOKIE_WHITELIST
-			NSLog(@"[CookieJar] found entry for component %@ in %@", wc, host);
-#endif
-			return YES;
-		}
-	}
-	
-	/* no match for any of these hosts, use the default */
-	hs = [HostSettings defaultHostSettings];
-	return [hs boolSettingOrDefault:HOST_SETTINGS_KEY_WHITELIST_COOKIES];
+	return [HostSettings for:host.lowercaseString].whitelistCookies;
 }
 
 - (NSArray *)sortedHostCounts
@@ -306,100 +276,13 @@
 	}
 }
 
-- (void)clearAllNonWhitelistedCookiesOlderThan:(NSTimeInterval)secs
-{
-	for (NSHTTPCookie *cookie in [[self cookieStorage] cookies]) {
-		if ([self isHostWhitelisted:[cookie domain]]) {
-			continue;
-		}
-		
-		NSNumber *blocker;
-		
-		if (secs > 0) {
-			for (NSNumber *tabHashN in [[self dataAccesses] allKeys]) {
-				NSMutableDictionary *tabCookies = [[self dataAccesses] objectForKey:tabHashN];
-				NSDate *la = [tabCookies objectForKey:[cookie domain]];
-				if (la != nil || [[NSDate date] timeIntervalSinceDate:la] < secs) {
-					blocker = tabHashN;
-					break;
-				}
-			}
-		}
-
-		if (secs == 0 || blocker == nil) {
-#ifdef TRACE_COOKIE_WHITELIST
-			NSLog(@"[CookieJar] deleting non-whitelisted cookie: %@", cookie);
-#endif
-			[[self cookieStorage] deleteCookie:cookie];
-		}
-	}
-}
-
-- (void)clearAllNonWhitelistedLocalStorageOlderThan:(NSTimeInterval)secs
-{
-	NSDictionary *allFiles = [self localStorageFiles];
-	
-	/* sort filenames by length descending, so we're always deleting files in a dir before the dir itself */
-	NSArray *files = [[allFiles allKeys] sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
-		return [[NSNumber numberWithLong:[(NSString *)b length]] compare:[NSNumber numberWithLong:[(NSString *)a length]]];
-	}];
-	
-	for (NSString *file in files) {
-		NSString *fhost = [allFiles objectForKey:file];
-		
-		if ([self isHostWhitelisted:fhost]) {
-			continue;
-		}
-
-		NSNumber *blocker;
-		
-		if (secs > 0) {
-			for (NSNumber *tabHashN in [[self dataAccesses] allKeys]) {
-				NSMutableDictionary *tabData = [[self dataAccesses] objectForKey:tabHashN];
-				NSDate *la = [tabData objectForKey:fhost];
-				if (la != nil || [[NSDate date] timeIntervalSinceDate:la] < secs) {
-#ifdef TRACE_COOKIES
-					NSLog(@"[CookieJar] tab %@ blocking sweep of >%f secs", tabHashN, secs);
-#endif
-					blocker = tabHashN;
-					break;
-				}
-			}
-		}
-		
-		if (secs == 0 || blocker == nil) {
-#ifdef TRACE_COOKIES
-			NSLog(@"[CookieJar] deleting local storage for %@: %@", fhost, file);
-#endif
-			[[NSFileManager defaultManager] removeItemAtPath:file error:nil];
-		}
-	}
-}
-
-- (void)clearAllNonWhitelistedData
-{
-	[self clearAllNonWhitelistedCookiesOlderThan:0];
-	[self clearAllNonWhitelistedLocalStorageOlderThan:0];
-}
-
-- (void)clearAllOldNonWhitelistedData
-{
-	int sweepmins = [[self oldDataSweepTimeout] intValue];
-	
-#ifdef TRACE_COOKIES
-	NSLog(@"[CookieJar] clearing non-whitelisted data older than %d min(s)", sweepmins);
-#endif
-	[self clearAllNonWhitelistedCookiesOlderThan:(60 * sweepmins)];
-	[self clearAllNonWhitelistedLocalStorageOlderThan:(60 * sweepmins)];
-}
-
 
 - (void)clearNonWhitelistedDataForTab:(NSUInteger)tabHash
 {
 	NSNumber *tabHashN = [NSNumber numberWithLong:tabHash];
 
 #ifdef TRACE_COOKIES
-	NSLog(@"[Tab h%@] clearing non-whitelisted data", tabHashN);
+	NSLog(@"[Tab h%@] clearing non-allowlisted data", tabHashN);
 #endif
 	
 	for (NSString *cookieDomain in [[[self dataAccesses] objectForKey:tabHashN] allKeys]) {

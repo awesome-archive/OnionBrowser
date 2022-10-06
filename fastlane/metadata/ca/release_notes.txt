@@ -1,1 +1,1 @@
-
+- Actualitzat a Tor.framework 407.8.2 que conté Tor 0.4.7.8.

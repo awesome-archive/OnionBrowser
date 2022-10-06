@@ -15,8 +15,6 @@ UISearchController *searchController;
 {
 	self = [super initWithStyle:style];
 	
-	self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-	
 	self.sortedRuleRows = [[NSMutableArray alloc] init];
 	self.inUseRuleRows = [[NSMutableArray alloc] init];
 
@@ -95,7 +93,7 @@ UISearchController *searchController;
 		if ([row detailTextLabel] == nil || [[row detailTextLabel] isEqualToString:@""])
 			cell.detailTextLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Disabled: %@", nil), disabled];
 		else
-			cell.detailTextLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%@ (Disabled: %@)", nil), [row detailTextLabel], disabled];
+			cell.detailTextLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%1$@ (Disabled: %2$@)", nil), [row detailTextLabel], disabled];
 		cell.detailTextLabel.textColor = UIColor.systemRedColor;
 	}
 	

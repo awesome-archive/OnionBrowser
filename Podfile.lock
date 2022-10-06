@@ -1,139 +1,93 @@
 PODS:
-  - CSPHeader (0.4.0)
-  - DTFoundation (1.7.14):
-    - DTFoundation/AppKit (= 1.7.14)
-    - DTFoundation/Core (= 1.7.14)
-    - DTFoundation/Debug (= 1.7.14)
-    - DTFoundation/DTAnimatedGIF (= 1.7.14)
-    - DTFoundation/DTASN1 (= 1.7.14)
-    - DTFoundation/DTAsyncFileDeleter (= 1.7.14)
-    - DTFoundation/DTAWS (= 1.7.14)
-    - DTFoundation/DTHTMLParser (= 1.7.14)
-    - DTFoundation/DTProgressHUD (= 1.7.14)
-    - DTFoundation/DTReachability (= 1.7.14)
-    - DTFoundation/DTScripting (= 1.7.14)
-    - DTFoundation/DTSidePanel (= 1.7.14)
-    - DTFoundation/DTSQLite (= 1.7.14)
-    - DTFoundation/DTUTI (= 1.7.14)
-    - DTFoundation/DTZipArchive (= 1.7.14)
-    - DTFoundation/Runtime (= 1.7.14)
-    - DTFoundation/UIKit (= 1.7.14)
-    - DTFoundation/UIKit_BlocksAdditions (= 1.7.14)
-  - DTFoundation/Core (1.7.14)
-  - DTFoundation/Debug (1.7.14):
+  - CSPHeader (0.6.0)
+  - DTFoundation/Core (1.7.18)
+  - DTFoundation/DTASN1 (1.7.18):
     - DTFoundation/Core
-    - DTFoundation/Runtime
-  - DTFoundation/DTAnimatedGIF (1.7.14)
-  - DTFoundation/DTASN1 (1.7.14):
-    - DTFoundation/Core
-  - DTFoundation/DTAsyncFileDeleter (1.7.14):
-    - DTFoundation/Core
-  - DTFoundation/DTAWS (1.7.14):
-    - DTFoundation/Core
-  - DTFoundation/DTHTMLParser (1.7.14):
-    - DTFoundation/Core
-  - DTFoundation/DTProgressHUD (1.7.14):
-    - DTFoundation/Core
-    - DTFoundation/UIKit
-  - DTFoundation/DTReachability (1.7.14):
-    - DTFoundation/Core
-  - DTFoundation/DTScripting (1.7.14):
-    - DTFoundation/Core
-  - DTFoundation/DTSidePanel (1.7.14):
-    - DTFoundation/UIKit
-  - DTFoundation/DTSQLite (1.7.14):
-    - DTFoundation/Core
-  - DTFoundation/DTUTI (1.7.14)
-  - DTFoundation/DTZipArchive (1.7.14):
-    - DTFoundation/DTZipArchive/Minizip (= 1.7.14)
-  - DTFoundation/DTZipArchive/Minizip (1.7.14)
-  - DTFoundation/Runtime (1.7.14)
-  - DTFoundation/UIKit (1.7.14):
-    - DTFoundation/Core
-  - DTFoundation/UIKit_BlocksAdditions (1.7.14):
-    - DTFoundation/Core
-  - Eureka (5.1.0)
-  - KMPlaceholderTextView (1.4.0)
-  - Localize (2.3.0)
-  - OCMock (3.4.3)
-  - OCSPCache (0.1.0):
-    - OpenSSL-Universal (= 1.0.2.17)
-    - ReactiveObjC (= 3.1.1)
-  - OpenSSL-Universal (1.0.2.17)
-  - OrderedDictionary (1.4)
-  - POE (0.6.1):
-    - KMPlaceholderTextView (~> 1.4)
-    - Localize (~> 2.2)
-  - Reachability (3.2)
+  - Eureka (5.3.6)
+  - FavIcon (3.1.0)
+  - ImageRow (4.1.0):
+    - Eureka (~> 5.3.5)
+  - IPtProxy (1.8.0)
+  - IPtProxyUI (1.10.2):
+    - Eureka (~> 5.3)
+    - ImageRow (~> 4.0)
+    - IPtProxy (~> 1.8)
+    - MBProgressHUD (~> 1.2)
+    - ReachabilitySwift (~> 5.0)
+  - MBProgressHUD (1.2.0)
+  - OCMock (3.9.1)
+  - ReachabilitySwift (5.0.0)
   - ReactiveObjC (3.1.1)
+  - SDCAlertView (10.0)
+  - Tor/Core (407.10.3)
+  - Tor/GeoIP (407.10.3):
+    - Tor/Core
+  - Tor/OCSPCache (407.10.3):
+    - ReactiveObjC (~> 3.1.1)
+    - Tor/GeoIP
   - TUSafariActivity (1.0.4)
-  - UIColor-HexRGB (1.0.1)
   - VForceTouch (0.0.2)
-  - WYPopoverController (0.3.9)
 
 DEPENDENCIES:
-  - CSPHeader (~> 0.4)
-  - DTFoundation
-  - Eureka (~> 5.1)
+  - CSPHeader (~> 0.6)
+  - DTFoundation/DTASN1
+  - FavIcon (from `https://github.com/tladesignz/FavIcon.git`)
+  - IPtProxyUI (~> 1.10)
+  - MBProgressHUD (~> 1.2)
   - OCMock
-  - OCSPCache (from `https://github.com/Psiphon-Labs/OCSPCache`)
-  - OrderedDictionary
-  - POE (~> 0.6)
-  - Reachability (~> 3.2)
+  - SDCAlertView (~> 10)
+  - Tor/OCSPCache (from `https://raw.githubusercontent.com/tladesignz/Tor.framework/ocspcache/Tor.podspec`)
   - TUSafariActivity
-  - UIColor-HexRGB
   - VForceTouch
-  - WYPopoverController (from `https://github.com/sammcewan/WYPopoverController.git`)
 
 SPEC REPOS:
-  trunk:
+  https://github.com/CocoaPods/Specs.git:
     - CSPHeader
     - DTFoundation
     - Eureka
-    - KMPlaceholderTextView
-    - Localize
+    - ImageRow
+    - IPtProxy
+    - IPtProxyUI
+    - MBProgressHUD
     - OCMock
-    - OpenSSL-Universal
-    - OrderedDictionary
-    - POE
-    - Reachability
+    - ReachabilitySwift
     - ReactiveObjC
+    - SDCAlertView
     - TUSafariActivity
-    - UIColor-HexRGB
     - VForceTouch
 
 EXTERNAL SOURCES:
-  OCSPCache:
-    :git: https://github.com/Psiphon-Labs/OCSPCache
-  WYPopoverController:
-    :git: https://github.com/sammcewan/WYPopoverController.git
+  FavIcon:
+    :git: https://github.com/tladesignz/FavIcon.git
+  Tor:
+    :podspec: https://raw.githubusercontent.com/tladesignz/Tor.framework/ocspcache/Tor.podspec
 
 CHECKOUT OPTIONS:
-  OCSPCache:
-    :commit: 71e9f5d2fdc4afb0d9b04ea019e2f0bec64cdc30
-    :git: https://github.com/Psiphon-Labs/OCSPCache
-  WYPopoverController:
-    :commit: 9b8011bd95bd95f6fca6a0afa78965fbf645a062
-    :git: https://github.com/sammcewan/WYPopoverController.git
+  FavIcon:
+    :commit: 9969d1aaffced321facc66d20c82e7eab2a8aa98
+    :git: https://github.com/tladesignz/FavIcon.git
+  Tor:
+    :commit: 1235e5b78325392463bfbf844d995686b5075a83
+    :git: https://github.com/tladesignz/Tor.framework.git
+    :submodules: true
 
 SPEC CHECKSUMS:
-  CSPHeader: adec9dd23d5ea822b8e397407c40c6435b4a7c49
-  DTFoundation: 25aa19bb7c6e225b1dfae195604fb8cf1da0ab4c
-  Eureka: 18a5076dcf0c41f9cd9748aa1c42f4d11434bdae
-  KMPlaceholderTextView: 2206c3df39979e9396e2d96fa9f427a8951121b0
-  Localize: cb1ae53ed73decaad0dce217806ed983091913f5
-  OCMock: 43565190abc78977ad44a61c0d20d7f0784d35ab
-  OCSPCache: 96237607aa9f77ba2fd9119e383b9fb1ef41cfa2
-  OpenSSL-Universal: ff04c2e6befc3f1247ae039e60c93f76345b3b5a
-  OrderedDictionary: 138c8d2e358d3a0c9adda15c6c7db24e8e3b09e6
-  POE: 8ffeeef873250bd972414734eab6df727de35847
-  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  CSPHeader: b28ad862745eb26644109f3a3aa3f5e318dcb9fe
+  DTFoundation: a53f8cda2489208cbc71c648be177f902ee17536
+  Eureka: 28ad9dec6286cd7cd601fdf8e8df39bb7356a8f4
+  FavIcon: 21651b47d8f6b33517973859f85e2cb6f9fcfaee
+  ImageRow: 880c0f052c5a89c80521b485c86ccf723a124e99
+  IPtProxy: e180e0f4381a893b52ae12626fbd0d40cbabe746
+  IPtProxyUI: 6a4b9ba6d646d093e79e7168206d8b9e34e13665
+  MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
+  OCMock: 9491e4bec59e0b267d52a9184ff5605995e74be8
+  ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   ReactiveObjC: 011caa393aa0383245f2dcf9bf02e86b80b36040
+  SDCAlertView: 5fbc48cae6d7bf9781097e3f27883924ef3b922c
+  Tor: 94c3a27c2e6e6f6456960ae2d8c049c528a7e21b
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
-  UIColor-HexRGB: daccfa7e936af664369734a164b0309087d7f970
   VForceTouch: b5c3a28625269e1818cf915728173bda9f669d6b
-  WYPopoverController: a9db25ac2841a686acdc0f3a99bdb21545db32f4
 
-PODFILE CHECKSUM: e76a7c1a89abc2a61460dec3e1b051e2bf5cabc5
+PODFILE CHECKSUM: f1be6f4a0dfc109fde1a4433a2a2a8c979e5e0a1
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.11.3
